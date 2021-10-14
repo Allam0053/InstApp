@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Comment\CreateController as CommentCreate;
 use App\Http\Controllers\Post\CreateController as PostCreate;
 use App\Http\Controllers\Post\ViewController as PostView;
 use App\Http\Controllers\User\ViewController as UserView;
@@ -25,6 +26,8 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     Route::post('/post/new', [PostCreate::class, 'store'])->name('post.create.post');
 
     Route::get('/post/{id}', [PostView::class, 'view'])->name('post.view');
+
+    Route::post('/post/comment', [CommentCreate::class, 'store'])->name('comment.create');
 });
 
 Route::get('/dashboard', function () {

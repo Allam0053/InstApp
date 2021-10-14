@@ -37,10 +37,25 @@
             <ul class="list-group">
               <?php $counter = 0; ?>
               @foreach ($post->comment as $comment)
-                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">{{ $comment->user }}</strong> &nbsp; {{ $comment->isi }}</li>
+                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">{{ $comment->user->name }}</strong> &nbsp; {{ $comment->isi }}</li>
                 <?php if ($counter++ == 5) break; ?>
               @endforeach
             </ul>
+            <div class="row d-flex justify-content-center">
+              @if(Auth::check())
+              <form class="form col-12" method="post" action="{{ route('comment.create') }}">
+                @csrf
+                <input type="hidden" name="id_user" value="{{ Auth::guard('web')->user()->id }}">
+                <input type="hidden" name="id_post" value="{{ $post->id }}">
+                <div class="row d-flex justify-content-end">
+                  <input type="text" name="isi" class="form-control col-12" placeholder="Comment..." required style="border: none;">
+                  <button type="submit" class="btn btn-primary col-2" style="margin-top: 10px;">Submit</button>
+                </div>
+              </form>
+              @else
+                <a href="{{ route('login') }}" class="btn btn-primary col-2" style="margin-top: 10px;">Login</a>
+              @endif
+            </div>
           </div>
         </div>
       </div>

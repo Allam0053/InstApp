@@ -79,31 +79,47 @@
         </div>
       </li>
 
+      
+
+      @if(Auth::guard('web')->check())
+        <li class="nav-item">
+          @php
+            $profile = '';
+          @endphp
+          @if ($active == "profile")
+          @php
+            $profile = 'active';
+          @endphp
+          @endif
+          <a class="nav-link {{$profile}}" href="{{ route('profile') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-user text-dark" aria-hidden="true"></i>
+            </div>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link-text ms-1">
+                <form role="nav-link {{$profile}}" method="POST" action="{{ route('logout') }}" class="dropdown-item">
+                    @csrf
+                    <span class="nav-link-text ms-1">
+                        <i class="ni ni-user-run"></i>
+                        <input class="nav-link-text ms-1 text-sm" type="submit" name="send" value="Log out"
+                            style="border:none; background:none;">
+                    </span>
+                </form>
+            </span>
+        </li>
+      @else
       <li class="nav-item">
-        @php
-          $profile = '';
-        @endphp
-        @if ($active == "profile")
-        @php
-          $profile = 'active';
-        @endphp
-        @endif
-        <a class="nav-link {{$profile}}" href="{{ route('profile') }}">
+        <a class="nav-link " href="{{ route('login') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fa fa-user text-dark" aria-hidden="true"></i>
           </div>
-          <span class="nav-link-text ms-1">Profile</span>
+          <span class="nav-link-text ms-1">Login</span>
         </a>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="fas fa-key text-dark" aria-hidden="true"></i>
-          </div>
-          <span class="nav-link-text ms-1 text-danger">log out</span>
-        </a>
-      </li>
+      @endif
 
     </ul>
   </div>
