@@ -47,7 +47,7 @@ Coded by www.creative-tim.com
                 <p class="mb-0">Enter your email and password to sign in</p>
               </div>
               <div class="card-body">
-                {{ $slot }}
+                @yield('content')
               </div>
               <div class="card-footer text-center pt-0 px-lg-2 px-1">
                 <p class="mb-4 text-sm mx-auto">

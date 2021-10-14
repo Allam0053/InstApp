@@ -1,59 +1,31 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.guest')
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+@section('content')
+@if(Session::has('error'))
+    <div class="alert alert-danger">
+    {{Session::get('error')}}
+    </div>
+@endif
+<form role="form" method="POST" action="{{ route('register') }}">
+    @csrf
+    <div class="mb-3">
+        <input type="text" class="form-control form-control-lg" placeholder="Email" aria-label="Email" id="email" value="{{old('email')}}" required autofocus name="email"
+            aria-describedby="email-addon">
+    </div>
+    <div class="mb-3">
+        <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" name="password"
+            aria-describedby="password-addon">
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control form-control-lg" placeholder="Name" aria-label="Name" id="name" value="{{old('name')}}" required autofocus name="name"
+            aria-describedby="email-addon">
+    </div>
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="rememberMe">
+        <label class="form-check-label" for="rememberMe">Remember me</label>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
+    </div>
+</form>
+@endsection
