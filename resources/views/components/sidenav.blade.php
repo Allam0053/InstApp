@@ -22,7 +22,7 @@
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             @include('icons.box-3d')
           </div>
-          <span class="nav-link-text ms-1">Dashboard</span>
+          <span class="nav-link-text ms-1">HOME</span>
         </a>
       </li>
       <li class="nav-item">
@@ -40,7 +40,7 @@
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
             @include('icons.shop')
           </div>
-          <span class="nav-link-text ms-1">Forms</span>
+          <span class="nav-link-text ms-1">Post</span>
         </a>
         <div class="collapse {{$forms_show}}" id="dashboardsExamples">
           <ul class="nav ms-4 ps-3">
@@ -55,8 +55,23 @@
             @endif
             <li class="nav-item {{$category_form_active}}">
               <a class="nav-link {{$category_form_active}}" href="#">
-                <span class="sidenav-mini-icon"> Ca </span>
-                <span class="sidenav-normal"> Category </span>
+                <span class="sidenav-mini-icon"> New </span>
+                <span class="sidenav-normal"> New </span>
+              </a>
+            </li>
+
+            @php
+              $category_form_active = '';
+            @endphp
+            @if ($form == "category")
+            @php
+              $category_form_active = 'active';
+            @endphp
+            @endif
+            <li class="nav-item {{$category_form_active}}">
+              <a class="nav-link {{$category_form_active}}" href="#">
+                <span class="sidenav-mini-icon"> My </span>
+                <span class="sidenav-normal"> My Post </span>
               </a>
             </li>
 
@@ -66,20 +81,30 @@
 
       <li class="nav-item">
         @php
-          $customer_active = '';
+          $profile = '';
         @endphp
-        @if ($active == "customer")
+        @if ($active == "profile")
         @php
-          $customer_active = 'active';
+          $profile = 'active';
         @endphp
         @endif
-        <a class="nav-link {{$customer_active}}" href="#">
+        <a class="nav-link {{$profile}}" href="{{ route('profile') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-            @include('icons.office')
+            <i class="fa fa-user text-dark" aria-hidden="true"></i>
           </div>
-          <span class="nav-link-text ms-1">Customer</span>
+          <span class="nav-link-text ms-1">Profile</span>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fas fa-key text-dark" aria-hidden="true"></i>
+          </div>
+          <span class="nav-link-text ms-1 text-danger">log out</span>
+        </a>
+      </li>
+
     </ul>
   </div>
 </aside>

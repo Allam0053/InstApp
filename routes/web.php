@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Post\CreateController as PostCreate;
+use App\Http\Controllers\Post\ViewController as PostView;
+use App\Http\Controllers\User\ViewController as UserView;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('front');
-})->name('home');
+Route::get('/', [PostView::class, 'index'])->name('home');
 
-Route::get('/profile', function () {
-    return view('profile');
+Route::group(['prefix' => '', 'middleware' => 'user'], function () {
+    Route::get('/profile', [UserView::class, 'index'])->name('profile');
+
+    Route::get('/post/new', [PostCreate::class, 'create'])->name('post.create.get');
+    Route::post('/post/new', [PostCreate::class, 'store'])->name('post.create.post');
+
+    Route::get('/post/{id}', [PostView::class, 'view'])->name('post.view');
 });
 
 Route::get('/dashboard', function () {

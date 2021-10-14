@@ -16,8 +16,8 @@ class CreateCommentTable extends Migration
         Schema::create('comment', function (Blueprint $table) {
             $table->id();
             $table->text('isi');
-            $table->bigInteger('id_post');
-            $table->bigInteger('id_user');
+            $table->unsignedBigInteger('id_post');
+            $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users');
             $table->foreign('id_post')->references('id')->on('post');    
             $table->timestamps();
