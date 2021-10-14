@@ -34,10 +34,22 @@
               {{ $post->caption }}
             </p>
             <hr class="horizontal gray-light my-4">
-            <ul class="list-group">
+            <ul class="list-group mb-4">
               <?php $counter = 0; ?>
               @foreach ($post->comment as $comment)
-                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">{{ $comment->user->name }}</strong> &nbsp; {{ $comment->isi }}</li>
+                <li class="border-0 ps-0 pt-0 text-sm row">
+                  <div class="col-11">
+                    <strong class="text-dark">{{ $comment->user->name }}</strong> &nbsp; <div id="isi-{{ $comment->id }}">{{ $comment->isi }}</div> 
+                  </div>
+                  
+                  @if(Auth::check())
+                    @if($comment->user->id == Auth::guard('web')->user()->id)
+                    <button type="button" class="btn bg-gradient-primary col-1 text-center p-auto" id="btn-edit-comment" data-bs-toggle="modal" data-bs-target="#editkomen" comment="{{ $comment->id }}">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    @endif
+                  @endif
+                </li>
                 <?php if ($counter++ == 5) break; ?>
               @endforeach
             </ul>
@@ -53,7 +65,7 @@
                 </div>
               </form>
               @else
-                <a href="{{ route('login') }}" class="btn btn-primary col-2" style="margin-top: 10px;">Login</a>
+                <a href="{{ route('login') }}" class="btn btn-primary col-12" style="margin-top: 10px;">Login</a>
               @endif
             </div>
           </div>
@@ -67,4 +79,56 @@
 
   </div>
 </div>
+
+@if(Auth::check())
+<!-- Modal -->
+<div class="modal fade" id="editkomen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{ route('comment.update') }}" id="comment-form">
+        @method('put')
+        <div class="modal-body">
+            @csrf
+            <input type="hidden" value="{{ Auth::guard('web')->user()->id }}" name="id_user">
+            <input type="hidden" value="{{ $post->id }}" name="id_post">
+            <input type="hidden" name="id_comment" id="input-id-comment">
+            <div class="mb-3">
+                <input type="text" class="form-control form-control-lg" placeholder="Comment..." aria-label="Comment" id="modal-comment" value="{{old('comment')}}" autofocus name="comment"
+                    aria-describedby="email-addon">
+            </div>
+          </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn bg-gradient-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endif
+@endsection
+
+
+@section('script')
+	<script>
+		const edit_comment = document.querySelectorAll('#btn-edit-comment');
+		edit_comment.forEach( btn => { //handler tombol komen
+			btn.addEventListener('click', (e) => {
+			const id = e.srcElement.getAttribute('comment');
+      console.log(id);
+      const isi = document.getElementById('isi-' + id);
+			const input = document.getElementById('modal-comment');
+      const input_id = document.getElementById('input-id-comment');
+			input.value = isi.innerText;
+      input_id.value = id.toString();
+			})
+		});
+	</script>
 @endsection
