@@ -37,6 +37,8 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     Route::get('/post/new', [PostCreate::class, 'create'])->name('post.create.get');
     Route::post('/post/new', [PostCreate::class, 'store'])->name('post.create.post');
     Route::get('/post/{id}', [PostView::class, 'view'])->name('post.view');
+    Route::get('/post/edit/{id}', [PostUpdate::class, 'edit'])->name('post.edit');
+    Route::put('/post/edit/{id}', [PostUpdate::class, 'update'])->name('post.update');
 
     Route::put('/post/like', [LikeCreate::class, 'store'])->name('like');
 
