@@ -36,13 +36,15 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
 
     Route::get('/post/new', [PostCreate::class, 'create'])->name('post.create.get');
     Route::post('/post/new', [PostCreate::class, 'store'])->name('post.create.post');
+    Route::get('/post/{id}', [PostView::class, 'view'])->name('post.view');
+
+    Route::put('/post/like', [LikeCreate::class, 'store'])->name('like');
 
     
     Route::post('/post/comment', [CommentCreate::class, 'store'])->name('comment.create');
 
     Route::put('/edit-comment', [CommentUpdate::class, 'store'])->name('comment.update');
 });
-Route::get('/post/{id}', [PostView::class, 'view'])->name('post.view');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

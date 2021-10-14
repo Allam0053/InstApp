@@ -22,10 +22,10 @@
       <div class="col-auto my-auto">
         <div class="h-100">
           <h5 class="mb-1">
-            Alec Thompson
+            {{ Auth::user()->name }}
           </h5>
           <p class="mb-0 font-weight-bold text-sm">
-            CEO / Co-Founder
+            Join the party {{ Auth::user()->created_at }}
           </p>
         </div>
       </div>

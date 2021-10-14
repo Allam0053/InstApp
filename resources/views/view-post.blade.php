@@ -32,6 +32,16 @@
             {{ $post->caption }}
           </p>
           <hr class="horizontal gray-light my-4">
+          @if(Auth::check())
+          <form method="post" action="{{ route('like') }}">
+            @method('put')
+            @csrf
+            <input type="hidden" name="id_user" value="{{ Auth::guard('web')->user()->id }}">
+            <input type="hidden" name="id_post" value="{{ $post->id }}">
+            <button style="border: none; background: none;" type="submit"><i class="fas fa-thumbs-up fa-2x"></i>{{ $post->like ? $post->like->count() : 0 }}</button>
+          </form>
+          @endif
+          <hr class="horizontal gray-light my-4">
           <ul class="list-group">
             @foreach ($post->comment as $comment)
               <li class="border-0 ps-0 pt-0 text-sm row">
