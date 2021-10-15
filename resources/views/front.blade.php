@@ -28,7 +28,7 @@
           </div>
           <div class="card-body p-3">
             <div class="col-12 d-flex justify-content-center">
-              <img class="" src="{{ $post->foto }}" alt="">        
+              <img src="{{ $post->foto }}" alt="" style="max-width: 500px;">        
             </div>
             <p class="text-sm">
               {{ $post->caption }}
@@ -106,7 +106,6 @@
         <div class="modal-body">
             @csrf
             <input type="hidden" value="{{ Auth::guard('web')->user()->id }}" name="id_user">
-            <input type="hidden" value="{{ $post->id }}" name="id_post">
             <input type="hidden" name="id_comment" id="input-id-comment">
             <div class="mb-3">
                 <input type="text" class="form-control form-control-lg" placeholder="Comment..." aria-label="Comment" id="modal-comment" value="{{old('comment')}}" autofocus name="comment"

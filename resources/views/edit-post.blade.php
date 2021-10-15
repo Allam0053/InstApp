@@ -13,7 +13,7 @@
     @csrf
     
     <div class="col-12 d-flex justify-content-center">
-      <img class="" src="{{ $post->foto }}" alt="">        
+      <img class="" src="{{ $post->foto }}" alt="" style="max-width: 500px;">        
     </div>
     <p class="text-sm">
       {{ $post->caption }}

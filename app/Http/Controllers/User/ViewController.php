@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ViewController extends Controller
 {
     public function index () {
-        return view('profile');
+        $posts = Post::where('id_user', Auth::user()->id);
+        return view('profile', compact('posts'));
     }
 }
