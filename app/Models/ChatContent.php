@@ -9,13 +9,14 @@ class ChatContent extends Model
 {
     use HasFactory;
     protected $table = 'chatcontent';
+    protected $timestamp = true;
     protected $fillable = [
         'content',
         'id_chat',
         'pengirim'
     ];
 
-    public function pengirim() {
+    public function user() {
         return $this->belongsTo(User::class, 'pengirim');
     }
 

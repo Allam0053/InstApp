@@ -28,7 +28,7 @@
           </div>
           <div class="card-body p-3">
             <div class="col-12 d-flex justify-content-center">
-              <img src="{{ $post->foto }}" alt="" style="max-width: 500px;">        
+              <img class="col-12" src="{{ $post->foto }}" alt="" style="max-width: 500px;">        
             </div>
             <p class="text-sm">
               {{ $post->caption }}

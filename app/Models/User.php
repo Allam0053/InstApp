@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function like() {
         return $this->hasMany(Like::class, 'id_user', 'id');
     }
+
+    public function chat() {
+        return $this->belongsToMany(Chat::class, 'userchat', 'id_user', 'id_chat', 'id', 'id');
+    }
 }

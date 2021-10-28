@@ -17,8 +17,8 @@ class CreateSavedTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_post');
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->foreign('id_post')->references('id')->on('post');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_post')->references('id')->on('post')->onDelete('cascade');
             $table->timestamps();
         });
     }
