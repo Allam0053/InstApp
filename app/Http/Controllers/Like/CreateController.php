@@ -19,6 +19,6 @@ class CreateController extends Controller
         } else {
             $like->delete();
         }
-        return redirect()->route('post.view', ['id' => $request->id_post]);
+        return redirect()->back();
     }
 }

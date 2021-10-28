@@ -11,6 +11,16 @@
 <div class="container d-flex justify-content-center">
   <div class="col-8 d-flex flex-column justify-content-center">
 
+  @if(Session::has('success'))
+  <div class="alert alert-success">
+      {{Session::get('success')}}
+  </div>
+  @elseif(Session::has('forbidden'))
+  <div class="alert alert-danger">
+    {{Session::get('forbidden')}}
+  </div>
+  @endif
+
     @foreach($posts as $post)
       <div class="col-12 py-4">
         <div class="card h-100">
@@ -48,7 +58,7 @@
               <?php $counter = 0; ?>
               @foreach ($post->comment as $comment)
                 <li class="border-0 ps-0 pt-0 text-sm row">
-                  <div class="col-11">
+                  <div class="col-11 mt-2">
                     <strong class="text-dark">{{ $comment->user->name }}</strong> &nbsp; <div id="isi-{{ $comment->id }}">{{ $comment->isi }}</div> 
                   </div>
                   
