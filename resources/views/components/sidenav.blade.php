@@ -11,11 +11,11 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         @php
-          $dashboard_active = '';
+        $dashboard_active = '';
         @endphp
         @if ($active == "dashboard")
         @php
-          $dashboard_active = 'active';
+        $dashboard_active = 'active';
         @endphp
         @endif
         <a class="nav-link {{$dashboard_active}}" href="{{ route('home') }}">
@@ -27,13 +27,13 @@
       </li>
       <li class="nav-item">
         @php
-          $forms_active = '';
-          $forms_show = '';
+        $forms_active = '';
+        $forms_show = '';
         @endphp
         @if ($active == "forms")
         @php
-          $forms_active = 'active';
-          $forms_show = 'show';
+        $forms_active = 'active';
+        $forms_show = 'show';
         @endphp
         @endif
         <a class="nav-link {{$forms_active}}" data-bs-toggle="collapse" href="#dashboardsExamples" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
@@ -46,26 +46,26 @@
           <ul class="nav ms-4 ps-3">
 
             @php
-              $category_form_active = '';
+            $category_form_active = '';
             @endphp
             @if ($form == "category")
             @php
-              $category_form_active = 'active';
+            $category_form_active = 'active';
             @endphp
             @endif
             <li class="nav-item {{$category_form_active}}">
-              <a class="nav-link {{$category_form_active}}" href="#">
+              <a class="nav-link {{$category_form_active}}" href="{{route('post.create.get')}}">
                 <span class="sidenav-mini-icon"> New </span>
                 <span class="sidenav-normal"> New </span>
               </a>
             </li>
 
             @php
-              $category_form_active = '';
+            $category_form_active = '';
             @endphp
             @if ($form == "category")
             @php
-              $category_form_active = 'active';
+            $category_form_active = 'active';
             @endphp
             @endif
             <li class="nav-item {{$category_form_active}}">
@@ -79,37 +79,36 @@
         </div>
       </li>
 
-      
+
 
       @if(Auth::guard('web')->check())
-        <li class="nav-item">
-          @php
-            $profile = '';
-          @endphp
-          @if ($active == "profile")
-          @php
-            $profile = 'active';
-          @endphp
-          @endif
-          <a class="nav-link {{$profile}}" href="{{ route('profile') }}">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fa fa-user text-dark" aria-hidden="true"></i>
-            </div>
-            <span class="nav-link-text ms-1">Profile</span>
-          </a>
-        </li>
-        <li class="nav-item">
+      <li class="nav-item">
+        @php
+        $profile = '';
+        @endphp
+        @if ($active == "profile")
+        @php
+        $profile = 'active';
+        @endphp
+        @endif
+        <a class="nav-link {{$profile}}" href="{{ route('profile') }}">
+          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fa fa-user text-dark" aria-hidden="true"></i>
+          </div>
+          <span class="nav-link-text ms-1">Profile</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <span class="nav-link-text ms-1">
+          <form role="nav-link {{$profile}}" method="POST" action="{{ route('logout') }}" class="dropdown-item">
+            @csrf
             <span class="nav-link-text ms-1">
-                <form role="nav-link {{$profile}}" method="POST" action="{{ route('logout') }}" class="dropdown-item">
-                    @csrf
-                    <span class="nav-link-text ms-1">
-                        <i class="ni ni-user-run"></i>
-                        <input class="nav-link-text ms-1 text-sm" type="submit" name="send" value="Log out"
-                            style="border:none; background:none;">
-                    </span>
-                </form>
+              <i class="ni ni-user-run"></i>
+              <input class="nav-link-text ms-1 text-sm" type="submit" name="send" value="Log out" style="border:none; background:none;">
             </span>
-        </li>
+          </form>
+        </span>
+      </li>
       @else
       <li class="nav-item">
         <a class="nav-link " href="{{ route('login') }}">
