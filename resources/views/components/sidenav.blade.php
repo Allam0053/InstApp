@@ -69,7 +69,7 @@
             @endphp
             @endif
             <li class="nav-item {{$category_form_active}}">
-              <a class="nav-link {{$category_form_active}}" href="#">
+              <a class="nav-link {{$category_form_active}}" href="{{route('post.view.my')}}">
                 <span class="sidenav-mini-icon"> My </span>
                 <span class="sidenav-normal"> My Post </span>
               </a>

@@ -20,9 +20,6 @@
               <h6 class="mb-0">{{ $post->user->name }}</h6>
             </div>
             <div class="col-md-4 text-end">
-              <!-- TODO -->
-              <!-- Do not follow if already followed -->
-              <!-- Or change to unfollow if already followed -->
               <form action="{{route('follow.create')}}" method="post">
                 @csrf
                 <input type="hidden" name="id_user" value="{{$post->id_user}}" />
@@ -91,10 +88,6 @@
       </div>
     </div>
     @endforeach
-
-    <div class="col-md-3 mx-auto">
-      {{ $posts->links() }}
-    </div>
 
   </div>
 </div>
