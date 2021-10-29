@@ -30,6 +30,11 @@ use App\Http\Controllers\ChatContent\CreateController as ChatContentCreate;
 use App\Http\Controllers\ChatContent\UpdateController as ChatContentUpdate;
 use App\Http\Controllers\ChatContent\DeleteController as ChatContentDelete;
 
+use App\Http\Controllers\Follow\ViewController as FollowView;
+use App\Http\Controllers\Follow\CreateController as FollowCreate;
+use App\Http\Controllers\Follow\UpdateController as FollowUpdate;
+use App\Http\Controllers\Follow\DeleteController as FollowDelete;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,7 +48,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function () {return view('chat');});
+Route::get('/test', function () {
+    return view('chat');
+});
 
 Route::get('/', [PostView::class, 'index'])->name('home');
 
@@ -52,13 +59,14 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
 
     Route::get('/post/new', [PostCreate::class, 'create'])->name('post.create.get');
     Route::post('/post/new', [PostCreate::class, 'store'])->name('post.create.post');
+    Route::get('/post/my', [PostView::class, 'viewMy'])->name('post.view.my');
     Route::get('/post/{id}', [PostView::class, 'view'])->name('post.view');
     Route::get('/post/edit/{id}', [PostUpdate::class, 'edit'])->name('post.edit');
     Route::put('/post/edit/{id}', [PostUpdate::class, 'update'])->name('post.update');
 
     Route::put('/post/like', [LikeCreate::class, 'store'])->name('like');
 
-    
+
     Route::post('/post/comment', [CommentCreate::class, 'store'])->name('comment.create');
 
     Route::put('/edit-comment', [CommentUpdate::class, 'store'])->name('comment.update');
@@ -67,10 +75,12 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     Route::post('/chat/{active}', [ChatContentCreate::class, 'store'])->name('chatcontent.create.post');
     Route::get('/chat.new', [ChatView::class, 'showForm'])->name('chat.create.get');
     Route::post('/chat.new', [ChatCreate::class, 'store'])->name('chat.create.post');
+
+    Route::post('/follow', [FollowCreate::class, 'store'])->name('follow.create');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
