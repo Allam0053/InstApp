@@ -21,7 +21,7 @@
     </div>
     @endif
 
-    @foreach($posts as $post)
+    @foreach($savedPosts as $post)
     <div class="col-12 py-4">
       <div class="card h-100">
         <div class="card-header pb-0 p-3">
@@ -37,12 +37,6 @@
                 @csrf
                 <input type="hidden" name="id_user" value="{{$post->id_user}}" />
                 <input type="submit" name="follow" value="follow" />
-              </form>
-              <form action="{{route('saved.create')}}" method="post">
-                @csrf
-                <input type="hidden" name="id_user" value="{{$post->id_user}}" />
-                <input type="hidden" name="id_post" value="{{$post->id}}" />
-                <input type="submit" name="save" value="save" />
               </form>
               <a href="javascript:;">
                 <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span class="sr-only">Edit Profile</span>
@@ -108,9 +102,9 @@
     </div>
     @endforeach
 
-    <div class="col-md-3 mx-auto">
+    {{-- <div class="col-md-3 mx-auto">
       {{ $posts->links() }}
-    </div>
+    </div> --}}
 
   </div>
 </div>
