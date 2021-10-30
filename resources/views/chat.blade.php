@@ -49,7 +49,7 @@
           @if($user)
           @foreach($user->chat as $chat)
           @if($chat->id == $active)
-          <a href="javascript:;" class="list-group-item active bg-gradient-primary">
+          <a href="{{route('chat', ['active' => $chat->id])}}" class="list-group-item active bg-gradient-primary">
             <div class="media">
               <div class="media-body ml-2">
                 <div class="justify-content-between align-items-center">
@@ -65,7 +65,7 @@
           </a>
           @continue
           @endif
-          <a href="javascript:;" class="list-group-item">
+          <a href="{{route('chat', ['active' => $chat->id])}}" class="list-group-item">
             <div class="media">
               <div class="media-body ml-2">
                 <div class="justify-content-between align-items-center">
