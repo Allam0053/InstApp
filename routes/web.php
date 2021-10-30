@@ -59,6 +59,7 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     // profiling
     Route::get('/profile', [UserView::class, 'index'])->name('profile');
     Route::get('/profile/{id}', [UserView::class, 'get'])->name('profile.get');
+    Route::put('/edit-profile', [UserUpdate::class, 'update'])->name('profile.update');
 
     // posting
     Route::get('/post/new', [PostCreate::class, 'create'])->name('post.create.get');

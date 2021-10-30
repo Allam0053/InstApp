@@ -58,9 +58,9 @@
               <h6 class="mb-0">Profile Information</h6>
             </div>
             <div class="col-md-4 text-end">
-              <a href="javascript:;">
-                <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span class="sr-only">Edit Profile</span>
-              </a>
+              <button type="button" class="btn bg-gradient-primary text-center p-auto" id="btn-edit-profile" data-bs-toggle="modal" data-bs-target="#editProfile">
+                <i class="fas fa-user-edit text-secondary text-sm text-dark" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span class="sr-only">Edit Profile</span>
+              </button>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
           <p class="text-sm">
             {{ Auth::user()->bio }}
           </p>
-          <hr class="horizontal gray-light my-4">
+          <hr class="horizontal gray-light my-1">
           <ul class="list-group">
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; {{ Auth::user()->mobile }}</li>
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ Auth::user()->email }}</li>
@@ -79,6 +79,39 @@
       </div>
     </div>
   </div>
+
+  @if(Auth::check())
+  <!-- Modal Edit Profile -->
+  <div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="POST" action="{{ route('profile.update') }}" id="profile-form">
+          @method('put')
+          <div class="modal-body">
+            @csrf
+            {{-- <input type="hidden" value="{{ Auth::guard('web')->user()->id }}" name="id"> --}}
+            <div class="mb-3">
+              <input type="text" class="form-control form-control-lg mb-1" placeholder="Bio" aria-label="Bio" id="input-bio" value="{{old('bio')}}" autofocus name="bio">
+              <input type="text" class="form-control form-control-lg mb-1" placeholder="Mobile" aria-label="Mobile" id="input-mobile" value="{{old('mobile')}}" autofocus name="mobile">
+              <input type="text" class="form-control form-control-lg mb-1" placeholder="City" aria-label="City" id="input-city" value="{{old('city')}}" autofocus name="city">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn bg-gradient-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  @endif
 
   <div class="row pt-4">
     <div class="col-12">
