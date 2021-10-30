@@ -2,15 +2,14 @@
 
 @section('content')
 @if(Session::has('error'))
-    <div class="alert alert-danger">
-        {{Session::get('error')}}
-    </div>
+<div class="alert alert-danger">
+    {{Session::get('error')}}
+</div>
 @endif
-<form role="form" method="POST" action="{{ route('register') }}">
+<form enctype="multipart/form-data" role="form" method="POST" action="{{ route('register') }}">
     @csrf
     <div class="mb-3">
-        <input type="text" class="form-control form-control-lg {{ $errors->has('name') ? 'error' : '' }}" placeholder="Email" aria-label="Email" id="email" value="{{old('email')}}" required autofocus name="email"
-            aria-describedby="email-addon">
+        <input type="email" class="form-control form-control-lg {{ $errors->has('name') ? 'error' : '' }}" placeholder="Email" aria-label="Email" id="email" value="{{old('email')}}" required autofocus name="email" aria-describedby="email-addon">
         <!-- Error -->
         @if ($errors->has('email'))
         <div class="error">
@@ -19,8 +18,7 @@
         @endif
     </div>
     <div class="mb-3">
-        <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" name="password"
-            aria-describedby="password-addon">
+        <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" name="password" aria-describedby="password-addon">
         <!-- Error -->
         @if ($errors->has('password'))
         <div class="error">
@@ -29,8 +27,7 @@
         @endif
     </div>
     <div class="mb-3">
-        <input type="password" class="form-control form-control-lg" placeholder="Re-enter Password" aria-label="Password" name="password_confirmation"
-            aria-describedby="password-addon">
+        <input type="password" class="form-control form-control-lg" placeholder="Re-enter Password" aria-label="Password" name="password_confirmation" aria-describedby="password-addon">
         <!-- Error -->
         @if ($errors->has('password'))
         <div class="error">
@@ -39,12 +36,20 @@
         @endif
     </div>
     <div class="mb-3">
-        <input type="text" class="form-control form-control-lg" placeholder="Name" aria-label="Name" id="name" value="{{old('name')}}" required autofocus name="name"
-            aria-describedby="email-addon">
+        <input type="text" class="form-control form-control-lg" placeholder="Name" aria-label="Name" id="name" value="{{old('name')}}" required autofocus name="name" aria-describedby="email-addon">
         <!-- Error -->
         @if ($errors->has('name'))
         <div class="error">
             {{ $errors->first('name') }}
+        </div>
+        @endif
+    </div>
+    <div class="mb-3">
+        <input type="file" class="form-control form-control-lg" placeholder="Avatar" aria-label="Avatar" id="avatar" value="{{old('avatar')}}" autofocus name="avatar" aria-describedby="email-addon">
+        <!-- Error -->
+        @if ($errors->has('avatar'))
+        <div class="error">
+            {{ $errors->first('avatar') }}
         </div>
         @endif
     </div>

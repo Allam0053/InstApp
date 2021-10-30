@@ -33,7 +33,11 @@
             <div class="col-md-8 d-flex align-items-center">
               <a href="/profile/{{$post->id_user}}">
                 <form action="{{route('follow.create')}}" method="post">
-                  <h6 class="mb-0">{{ $post->user->name }}
+                  <h6 class="mb-0">
+                    @if($post->user->avatar)
+                    <img src="{{ $post->user->avatar }}" class="avatar avatar-sm me-3" alt="user1">
+                    @endif
+                    {{ $post->user->name }}
                     @csrf
                     <input type="hidden" name="id_user" value="{{$post->id_user}}" />
                     <button type="submit" style="background: none; border: none;">

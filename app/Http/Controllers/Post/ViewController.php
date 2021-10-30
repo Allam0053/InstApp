@@ -20,7 +20,7 @@ class ViewController extends Controller
                 if ($post->id_user == $following->id_user) $post->following = true;
             }
         }
-        return view('front', compact(['posts', 'following']));
+        return view('front', compact(['posts']));
     }
 
     public function view($id)

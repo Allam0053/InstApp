@@ -31,7 +31,7 @@
     <div class="row gx-4">
       <div class="col-auto">
         <div class="avatar avatar-xl position-relative">
-          <img src="../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+          <img src="{{ Auth::user()->avatar }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
         </div>
       </div>
       <div class="col-auto my-auto">
@@ -91,15 +91,17 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form method="POST" action="{{ route('profile.update') }}" id="profile-form">
+        <form method="POST" enctype="multipart/form-data" action="{{ route('profile.update') }}" id="profile-form">
           @method('put')
           <div class="modal-body">
             @csrf
             {{-- <input type="hidden" value="{{ Auth::guard('web')->user()->id }}" name="id"> --}}
             <div class="mb-3">
-              <input type="text" class="form-control form-control-lg mb-1" placeholder="Bio" aria-label="Bio" id="input-bio" value="{{old('bio')}}" autofocus name="bio">
-              <input type="text" class="form-control form-control-lg mb-1" placeholder="Mobile" aria-label="Mobile" id="input-mobile" value="{{old('mobile')}}" autofocus name="mobile">
-              <input type="text" class="form-control form-control-lg mb-1" placeholder="City" aria-label="City" id="input-city" value="{{old('city')}}" autofocus name="city">
+              <input type="text" class="form-control form-control-lg mb-1" placeholder="Name" aria-label="Name" id="input-name" value="{{old('name') ? old('name') : Auth::user()->name }}" autofocus name="name">
+              <input type="text" class="form-control form-control-lg mb-1" placeholder="Bio" aria-label="Bio" id="input-bio" value="{{old('bio') ? old('bio') : Auth::user()->bio }}" autofocus name="bio">
+              <input type="text" class="form-control form-control-lg mb-1" placeholder="Mobile" aria-label="Mobile" id="input-mobile" value="{{old('mobile') ? old('mobile') : Auth::user()->mobile }}" autofocus name="mobile">
+              <input type="text" class="form-control form-control-lg mb-1" placeholder="City" aria-label="City" id="input-city" value="{{old('city') ? old('city') : Auth::user()->city }}" autofocus name="city">
+              <input type="file" class="form-control form-control-lg mb-1" placeholder="City" aria-label="City" id="input-avatar" value="{{old('avatar') ? old('avatar') : Auth::user()->avatar }}" autofocus name="avatar">
             </div>
           </div>
 
