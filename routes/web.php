@@ -35,6 +35,9 @@ use App\Http\Controllers\Follow\CreateController as FollowCreate;
 use App\Http\Controllers\Follow\UpdateController as FollowUpdate;
 use App\Http\Controllers\Follow\DeleteController as FollowDelete;
 
+use App\Http\Controllers\Save\ViewController as SavedView;
+use App\Http\Controllers\Save\CreateController as SavedCreate;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,6 +82,9 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
 
     Route::post('/follow', [FollowCreate::class, 'store'])->name('follow.create');
     Route::post('/unfollow', [FollowCreate::class, 'store'])->name('follow.delete');
+
+    Route::get('/saved', [SavedView::class, 'index'])->name('saved.view');
+    Route::post('/saved/new', [SavedCreate::class, 'store'])->name('saved.create');
 });
 
 Route::get('/dashboard', function () {

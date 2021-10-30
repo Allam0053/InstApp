@@ -114,6 +114,22 @@
         </a>
       </li>
       <li class="nav-item">
+        @php
+        $saved = '';
+        @endphp
+        @if ($active == "saved")
+        @php
+        $saved = 'active';
+        @endphp
+        @endif
+        <a class="nav-link {{$saved}}" href="{{ route('saved.view') }}">
+          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fa fa-save text-dark" aria-hidden="true"></i>
+          </div>
+          <span class="nav-link-text ms-1">Saved</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <span class="nav-link-text ms-1">
           <form role="nav-link {{$profile}}" method="POST" action="{{ route('logout') }}" class="dropdown-item">
             @csrf
