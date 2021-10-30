@@ -11,6 +11,16 @@
 <div class="container d-flex justify-content-center">
   <div class="col-8 d-flex flex-column justify-content-center">
 
+  @if(Session::has('success'))
+  <div class="alert alert-success">
+      {{Session::get('success')}}
+  </div>
+  @elseif(Session::has('forbidden'))
+  <div class="alert alert-danger">
+    {{Session::get('forbidden')}}
+  </div>
+  @endif
+
     @foreach($posts as $post)
     <div class="col-12 py-4">
       <div class="card h-100">
@@ -86,6 +96,41 @@
             @else
             <a href="{{ route('login') }}" class="btn btn-primary col-12" style="margin-top: 10px;">Login</a>
             @endif
+            <hr class="horizontal gray-light my-4">
+            <ul class="list-group mb-4">
+              <?php $counter = 0; ?>
+              @foreach ($post->comment as $comment)
+                <li class="border-0 ps-0 pt-0 text-sm row">
+                  <div class="col-11 mt-2">
+                    <strong class="text-dark">{{ $comment->user->name }}</strong> &nbsp; <div id="isi-{{ $comment->id }}">{{ $comment->isi }}</div> 
+                  </div>
+                  
+                  @if(Auth::check())
+                    @if($comment->user->id == Auth::guard('web')->user()->id)
+                    <button type="button" class="btn bg-gradient-primary col-1 text-center p-auto" id="btn-edit-comment" data-bs-toggle="modal" data-bs-target="#editkomen" comment="{{ $comment->id }}">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    @endif
+                  @endif
+                </li>
+                <?php if ($counter++ == 5) break; ?>
+              @endforeach
+            </ul>
+            <div class="row d-flex justify-content-center">
+              @if(Auth::check())
+              <form class="form col-12" method="post" action="{{ route('comment.create') }}">
+                @csrf
+                <input type="hidden" name="id_user" value="{{ Auth::guard('web')->user()->id }}">
+                <input type="hidden" name="id_post" value="{{ $post->id }}">
+                <div class="row d-flex justify-content-end">
+                  <input type="text" name="isi" class="form-control col-12" placeholder="Comment..." required style="border: none;">
+                  <button type="submit" class="btn btn-primary col-2" style="margin-top: 10px;">Submit</button>
+                </div>
+              </form>
+              @else
+                <a href="{{ route('login') }}" class="btn btn-primary col-12" style="margin-top: 10px;">Login</a>
+              @endif
+            </div>
           </div>
         </div>
       </div>
