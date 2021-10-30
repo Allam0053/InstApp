@@ -32,8 +32,22 @@ class ViewController extends Controller
 
     public function view($id)
     {
-        $post = Post::findOrFail($id);
-        return view('view-post', compact('post'));
+        $posts = Post::where('id', $id)->get();
+        $posts = new LengthAwarePaginator($posts, $posts->count(), 10);
+
+        $followings = Follow::where('follower', Auth::id())->get();
+        $saveds = Saved::where('id_user', Auth::id())->get();
+        foreach ($posts as $post) {
+            foreach ($followings as $following) {
+                if ($post->id_user == $following->id_user) $post->following = true;
+            }
+
+            foreach ($saveds as $saved) {
+                if ($post->id == $saved->id_post) $post->saved = true;
+            }
+        }
+
+        return view('front', compact(['posts']));
     }
 
     public function viewMy()
