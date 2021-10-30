@@ -38,6 +38,7 @@ use App\Http\Controllers\Follow\DeleteController as FollowDelete;
 use App\Http\Controllers\Save\ViewController as SavedView;
 use App\Http\Controllers\Save\CreateController as SavedCreate;
 use App\Models\ChatContent;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -101,3 +102,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
+
+Route::get('create-symlink', function () {
+    app('files')->link(storage_path('app/public'), public_path('storage'));
+});
+
+Route::get('create-symlink1', function () {
+    Artisan::call('storage:link');
+    dd('succes');
+});

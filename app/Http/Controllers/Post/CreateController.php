@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class CreateController extends Controller
 {
-    public function create() {
+    public function create()
+    {
         return view('create-post');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $post = Post::create([
             'caption' => $request->caption,
             'id_user' => Auth::guard('web')->user()->id
@@ -25,13 +27,14 @@ class CreateController extends Controller
         return redirect()->route('post.view', ['id' => $post->id]);
     }
 
-    public function saveFoto (Request $request, $id) {
+    public function saveFoto(Request $request, $id)
+    {
         $foto = $request->foto; // typedata : file
         $foto_name = ''; // typedata : string
-        if ($foto !== NULL){
+        if ($foto !== NULL) {
             $foto_name = 'foto' . '-' . $id . "." . $foto->extension(); // typedata : string
             $foto_name = str_replace(' ', '-', strtolower($foto_name)); // typedata : string
-            $foto->storeAs('public', $foto_name); // memanggil function untuk menaruh file di storage
+            $foto->storeAs(null, $foto_name, ['disk' => 'public']); // memanggil function untuk menaruh file di storage
         }
         return asset('storage') . '/' . $foto_name; // me return path/to/file.ext
     }
