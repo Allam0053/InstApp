@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Save;
 
 use App\Http\Controllers\Controller;
+use App\Models\Follow;
 use App\Models\Post;
 use App\Models\Saved;
 use App\Models\User;
@@ -27,6 +28,18 @@ class ViewController extends Controller
         $user = User::where('id', Auth::id())->get()->first();
         $posts = $user->saved_post;
         $posts = new LengthAwarePaginator($posts, $posts->count(), 10);
+
+        $followings = Follow::where('follower', Auth::id())->get();
+        $saveds = Saved::where('id_user', Auth::id())->get();
+        foreach ($posts as $post) {
+            foreach ($followings as $following) {
+                if ($post->id_user == $following->id_user) $post->following = true;
+            }
+
+            foreach ($saveds as $saved) {
+                if ($post->id == $saved->id_post) $post->saved = true;
+            }
+        }
 
         return view('front', compact(['posts']));
     }

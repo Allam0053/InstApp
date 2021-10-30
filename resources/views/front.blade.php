@@ -54,10 +54,10 @@
 
               <form action="{{route('saved.create')}}" method="post">
                 @csrf
-                <input type="hidden" name="id_user" value="{{$post->id_user}}" />
+                <input type="hidden" name="id_user" value="{{ Auth::id() }}" />
                 <input type="hidden" name="id_post" value="{{$post->id}}" />
                 <button type="submit" style="background: none; border: none;">
-                  <span class="badge badge-sm bg-gradient-primary">Save</span>
+                  <span class="badge badge-sm bg-gradient-{{ $post->saved ? 'danger' : 'primary' }}">{{ $post->saved ? 'Unsave' : 'Save' }}</span>
                 </button>
                 @if($post->id_user == Auth::id())
                 <a class="badge badge-sm bg-gradient-warning" href="{{ route('post.edit', ['id' => $post->id]) }}">Edit</a>
