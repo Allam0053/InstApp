@@ -17,9 +17,9 @@ class CreateChatcontentTable extends Migration
             $table->id();
             $table->text('content');
             $table->unsignedBigInteger('id_chat')->nullable();
-            $table->foreign('id_chat')->references('id')->on('chat')->onDelete('cascade');
+            $table->foreign('id_chat')->references('id')->on('chat')->onDelete('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('pengirim')->nullable();
-            $table->foreign('pengirim')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('pengirim')->references('id')->on('users')->onDelete('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

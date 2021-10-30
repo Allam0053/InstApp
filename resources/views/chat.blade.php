@@ -11,6 +11,20 @@
 <!-- Page content -->
 <div class="container-fluid mt--6">
 
+  @if(Session::has('success'))
+  <div class="alert alert-success">
+    {{Session::get('success')}}
+  </div>
+  @elseif(Session::has('forbidden'))
+  <div class="alert alert-danger">
+    {{Session::get('forbidden')}}
+  </div>
+  @elseif(Session::has('message'))
+  <div class="alert alert-warning">
+    {{Session::get('message')}}
+  </div>
+  @endif
+
   <div class="row flex-row chat">
     <div class="col-lg-4">
       <div class="card bg-secondary">

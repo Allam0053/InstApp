@@ -2,13 +2,27 @@
 
 @section('navbar')
 @include('components.sidenav', [
-  'active' => "dashboard",
-  'form' => ""
+'active' => "dashboard",
+'form' => ""
 ])
 @endsection
 
 @section('content')
 <div class="container d-flex justify-content-center">
+
+  @if(Session::has('success'))
+  <div class="alert alert-success">
+    {{Session::get('success')}}
+  </div>
+  @elseif(Session::has('forbidden'))
+  <div class="alert alert-danger">
+    {{Session::get('forbidden')}}
+  </div>
+  @elseif(Session::has('message'))
+  <div class="alert alert-warning">
+    {{Session::get('message')}}
+  </div>
+  @endif
   <div class="col-8 d-flex flex-column justify-content-center">
     <div class="col-12 py-4">
       <div class="card h-100">
@@ -26,7 +40,7 @@
         </div>
         <div class="card-body p-3">
           <div class="col-12 d-flex justify-content-center">
-            <img class="" src="{{ $post->foto }}" alt="" style="max-width: 500px;">        
+            <img class="" src="{{ $post->foto }}" alt="" style="max-width: 500px;">
           </div>
           <p class="text-sm">
             {{ $post->caption }}
@@ -44,19 +58,19 @@
           <hr class="horizontal gray-light my-4">
           <ul class="list-group">
             @foreach ($post->comment as $comment)
-              <li class="border-0 ps-0 pt-0 text-sm row">
-                <div class="col-11">
-                  <strong class="text-dark">{{ $comment->user->name }}</strong> &nbsp; <div id="isi-{{ $comment->id }}">{{ $comment->isi }}</div> 
-                </div>
-                
-                @if(Auth::check())
-                  @if($comment->user->id == Auth::guard('web')->user()->id)
-                  <button type="button" class="btn bg-gradient-primary col-1 text-center p-auto" id="btn-edit-comment" data-bs-toggle="modal" data-bs-target="#editkomen" comment="{{ $comment->id }}">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  @endif
-                @endif
-              </li>
+            <li class="border-0 ps-0 pt-0 text-sm row">
+              <div class="col-11">
+                <strong class="text-dark">{{ $comment->user->name }}</strong> &nbsp; <div id="isi-{{ $comment->id }}">{{ $comment->isi }}</div>
+              </div>
+
+              @if(Auth::check())
+              @if($comment->user->id == Auth::guard('web')->user()->id)
+              <button type="button" class="btn bg-gradient-primary col-1 text-center p-auto" id="btn-edit-comment" data-bs-toggle="modal" data-bs-target="#editkomen" comment="{{ $comment->id }}">
+                <i class="fas fa-edit"></i>
+              </button>
+              @endif
+              @endif
+            </li>
             @endforeach
           </ul>
           <div class="row d-flex justify-content-center">
@@ -71,7 +85,7 @@
               </div>
             </form>
             @else
-              <a href="{{ route('login') }}" class="btn btn-primary col-2" style="margin-top: 10px;">Login</a>
+            <a href="{{ route('login') }}" class="btn btn-primary col-2" style="margin-top: 10px;">Login</a>
             @endif
           </div>
         </div>
@@ -93,16 +107,15 @@
       <form method="POST" action="{{ route('comment.update') }}" id="comment-form">
         @method('put')
         <div class="modal-body">
-            @csrf
-            <input type="hidden" value="{{ Auth::guard('web')->user()->id }}" name="id_user">
-            <input type="hidden" value="{{ $post->id }}" name="id_post">
-            <input type="hidden" name="id_comment" id="input-id-comment">
-            <div class="mb-3">
-                <input type="text" class="form-control form-control-lg" placeholder="Comment..." aria-label="Comment" id="modal-comment" value="{{old('comment')}}" autofocus name="comment"
-                    aria-describedby="email-addon">
-            </div>
+          @csrf
+          <input type="hidden" value="{{ Auth::guard('web')->user()->id }}" name="id_user">
+          <input type="hidden" value="{{ $post->id }}" name="id_post">
+          <input type="hidden" name="id_comment" id="input-id-comment">
+          <div class="mb-3">
+            <input type="text" class="form-control form-control-lg" placeholder="Comment..." aria-label="Comment" id="modal-comment" value="{{old('comment')}}" autofocus name="comment" aria-describedby="email-addon">
           </div>
-        
+        </div>
+
         <div class="modal-footer">
           <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" class="btn bg-gradient-primary">Save changes</button>
@@ -116,18 +129,18 @@
 
 
 @section('script')
-	<script>
-		const edit_comment = document.querySelectorAll('#btn-edit-comment');
-		edit_comment.forEach( btn => { //handler tombol komen
-			btn.addEventListener('click', (e) => {
-			const id = e.srcElement.getAttribute('comment');
+<script>
+  const edit_comment = document.querySelectorAll('#btn-edit-comment');
+  edit_comment.forEach(btn => { //handler tombol komen
+    btn.addEventListener('click', (e) => {
+      const id = e.srcElement.getAttribute('comment');
       console.log(id);
       const isi = document.getElementById('isi-' + id);
-			const input = document.getElementById('modal-comment');
+      const input = document.getElementById('modal-comment');
       const input_id = document.getElementById('input-id-comment');
-			input.value = isi.innerText;
+      input.value = isi.innerText;
       input_id.value = id.toString();
-			})
-		});
-	</script>
+    })
+  });
+</script>
 @endsection

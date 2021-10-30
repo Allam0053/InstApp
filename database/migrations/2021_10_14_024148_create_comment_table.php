@@ -18,8 +18,8 @@ class CreateCommentTable extends Migration
             $table->text('isi');
             $table->unsignedBigInteger('id_post');
             $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->foreign('id_post')->references('id')->on('post');    
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_post')->references('id')->on('post')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ class ViewController extends Controller
         $user = User::findOrFail(Auth::user()->id);
         $active_chat = Chat::where('id', $active)->get()->first();
 
+        if ($active_chat == null) return redirect('/');
         if (!$this->authChat($user, $active_chat))
             return redirect()->route('home')->with('forbidden', 'You are not allowed to view it');
         return view('chat', compact(['user', 'active', 'active_chat']));

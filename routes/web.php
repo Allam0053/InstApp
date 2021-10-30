@@ -51,9 +51,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function () {
-    return view('chat');
-});
+Route::get('/test/{id}', [ChatDelete::class, 'deleteChat']);
 
 Route::get('/', [PostView::class, 'index'])->name('home');
 

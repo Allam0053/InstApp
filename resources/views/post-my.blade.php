@@ -11,6 +11,21 @@
 <div class="container d-flex justify-content-center">
   <div class="col-8 d-flex flex-column justify-content-center">
 
+
+    @if(Session::has('success'))
+    <div class="alert alert-success">
+      {{Session::get('success')}}
+    </div>
+    @elseif(Session::has('forbidden'))
+    <div class="alert alert-danger">
+      {{Session::get('forbidden')}}
+    </div>
+    @elseif(Session::has('message'))
+    <div class="alert alert-warning">
+      {{Session::get('message')}}
+    </div>
+    @endif
+
     @foreach($posts as $post)
     <div class="col-12 py-4">
       <div class="card h-100">

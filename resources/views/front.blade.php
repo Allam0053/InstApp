@@ -19,6 +19,10 @@
     <div class="alert alert-danger">
       {{Session::get('forbidden')}}
     </div>
+    @elseif(Session::has('message'))
+    <div class="alert alert-warning">
+      {{Session::get('message')}}
+    </div>
     @endif
 
     @foreach($posts as $post)

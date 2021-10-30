@@ -2,12 +2,27 @@
 
 @section('navbar')
 @include('components.sidenav', [
-  'active' => "profile",
-  'form' => ""
+'active' => "profile",
+'form' => ""
 ])
 @endsection
 
 @section('content')
+
+@if(Session::has('success'))
+<div class="alert alert-success">
+  {{Session::get('success')}}
+</div>
+@elseif(Session::has('forbidden'))
+<div class="alert alert-danger">
+  {{Session::get('forbidden')}}
+</div>
+@elseif(Session::has('message'))
+<div class="alert alert-warning">
+  {{Session::get('message')}}
+</div>
+@endif
+
 <div class="container-fluid">
   <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../assets/img/curved-images/curved0.jpg'); background-position-y: 50%;">
     <span class="mask bg-gradient-primary opacity-6"></span>
@@ -29,7 +44,7 @@
           </p>
         </div>
       </div>
-      
+
     </div>
   </div>
 
@@ -58,13 +73,13 @@
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; {{ Auth::user()->mobile }}</li>
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ Auth::user()->email }}</li>
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; {{ Auth::user()->city }}</li>
-            
+
           </ul>
         </div>
       </div>
     </div>
   </div>
-  
+
   <div class="row pt-4">
     <div class="col-12">
       <div class="card mb-4">
