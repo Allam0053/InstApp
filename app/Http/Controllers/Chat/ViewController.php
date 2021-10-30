@@ -14,9 +14,14 @@ class ViewController extends Controller
     public function getActiveChat()
     {
         $userChat = UserChat::where('id_user', Auth::id())->get()->first();
-        $id = $userChat->id;
-        return redirect()->route('chat', [$id]);
+        if ($userChat == null) {
+            return redirect()->route('chat.create.get');
+        } else {
+            $id = $userChat->id;
+            return redirect()->route('chat', [$id]);
+        }
     }
+
     public function index($active = 0)
     {
         $user = User::findOrFail(Auth::user()->id);
