@@ -10,13 +10,26 @@ use Illuminate\Support\Facades\Auth;
 
 class ViewController extends Controller
 {
-    public function index($active = 0) {
-        $user = User::findOrFail( Auth::user()->id );
+    public function index($active = 0)
+    {
+        $user = User::findOrFail(Auth::user()->id);
         $active_chat = Chat::where('id', $active)->get()->first();
+
+        if (!$this->authChat($user, $active_chat))
+            return redirect()->route('home')->with('forbidden', 'You are not allowed to view it');
         return view('chat', compact(['user', 'active', 'active_chat']));
     }
 
-    public function showForm() {
+    public function authChat($user, $active_chat): bool
+    {
+        foreach ($active_chat->user as $member) {
+            if ($member->id == $user->id) return true;
+        }
+        return false;
+    }
+
+    public function showForm()
+    {
         $users = User::all();
         return view('chat-new', compact(['users']));
     }

@@ -79,7 +79,22 @@
         </div>
       </li>
 
-
+      <li class="nav-item">
+        @php
+        $chat = '';
+        @endphp
+        @if ($active == "chat")
+        @php
+        $chat = 'active';
+        @endphp
+        @endif
+        <a class="nav-link {{$chat}}" href="/chat/1">
+          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fa fa-user text-dark" aria-hidden="true"></i>
+          </div>
+          <span class="nav-link-text ms-1">Chat</span>
+        </a>
+      </li>
 
       @if(Auth::guard('web')->check())
       <li class="nav-item">
