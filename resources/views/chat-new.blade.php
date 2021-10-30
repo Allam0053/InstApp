@@ -64,7 +64,6 @@
                 </tr>
               </thead>
               <tbody>
-
                 @foreach($users as $user)
                 <tr>
                   <td>
@@ -82,7 +81,6 @@
                   </td>
                 </tr>
                 @endforeach
-
               </tbody>
             </table>
           </div>
