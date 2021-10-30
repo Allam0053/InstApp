@@ -67,7 +67,7 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     Route::get('/post/{id}', [PostView::class, 'view'])->name('post.view');
     Route::get('/post/edit/{id}', [PostUpdate::class, 'edit'])->name('post.edit');
     Route::put('/post/edit/{id}', [PostUpdate::class, 'update'])->name('post.update');
-    Route::get('/post/delete/{id}', [PostDelete::class, 'deletePost'])->name('post.delete');
+    Route::get('/post/delete/{id}', [PostDelete::class, 'deletePost'])->name('post.delete'); // todo
 
     // liking
     Route::put('/post/like', [LikeCreate::class, 'store'])->name('like');
@@ -75,14 +75,14 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     // commenting
     Route::post('/post/comment', [CommentCreate::class, 'store'])->name('comment.create');
     Route::put('/edit-comment', [CommentUpdate::class, 'store'])->name('comment.update');
-    Route::get('/comment/delete/{id}', [CommentDelete::class, 'deleteComment'])->name('comment.delete');
+    Route::get('/comment/delete/{id}', [CommentDelete::class, 'deleteComment'])->name('comment.delete'); // todo
 
     // chatting
     Route::get('/chat/{active}', [ChatView::class, 'index'])->name('chat');
     Route::post('/chat/{active}', [ChatContentCreate::class, 'store'])->name('chatcontent.create.post');
     Route::get('/chat.new', [ChatView::class, 'showForm'])->name('chat.create.get');
     Route::post('/chat.new', [ChatCreate::class, 'store'])->name('chat.create.post');
-    Route::get('/chat/delete/{id}', [ChatDelete::class, 'deleteChat'])->name('chat.delete');
+    Route::get('/chat/delete/{id}', [ChatDelete::class, 'deleteChat'])->name('chat.delete'); // todo
 
     // following
     Route::post('/follow', [FollowCreate::class, 'store'])->name('follow.create');
