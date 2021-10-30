@@ -22,7 +22,7 @@
       <div class="col-auto my-auto">
         <div class="h-100">
           <h5 class="mb-1">
-            {{ Auth::user()->name }}
+            {{ Auth::user()->name }}#{{ Auth::user()->id }}
           </h5>
           <p class="mb-0 font-weight-bold text-sm">
             Join the party {{ Auth::user()->created_at }}
@@ -51,32 +51,20 @@
         </div>
         <div class="card-body p-3">
           <p class="text-sm">
-            Hi, I’m {{ Auth::user()->name }}. Hope I will be a great programmer.
+            {{ Auth::user()->bio }}
           </p>
           <hr class="horizontal gray-light my-4">
           <ul class="list-group">
-            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; Alec M. Thompson</li>
-            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (44) 123 1234 123</li>
-            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; alecthompson@mail.com</li>
-            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; USA</li>
-            <li class="list-group-item border-0 ps-0 pb-0">
-              <strong class="text-dark text-sm">Social:</strong> &nbsp;
-              <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
-              </a>
-              <a class="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
-              </a>
-              <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                <i class="fab fa-instagram fa-lg" aria-hidden="true"></i>
-              </a>
-            </li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; {{ Auth::user()->mobile }}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ Auth::user()->email }}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; {{ Auth::user()->city }}</li>
+            
           </ul>
         </div>
       </div>
     </div>
   </div>
-
+  
   <div class="row pt-4">
     <div class="col-12">
       <div class="card mb-4">
@@ -88,10 +76,10 @@
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">id</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Foto</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Caption</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
                   <th class="text-secondary opacity-7"></th>
                 </tr>
               </thead>
@@ -99,28 +87,23 @@
                 @foreach($posts as $post)
                 <tr>
                   <td>
-                    <div class="d-flex px-2 py-1">
-                      <div>
-                        <img src="" class="avatar avatar-sm me-3" alt="user1">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">Post {{ $post->id }}</h6>
-                      </div>
-                    </div>
+                    <h6 class="mb-0 text-sm">{{ $post->id }}</h6>
                   </td>
                   <td>
-                    <p class="text-xs font-weight-bold mb-0">Manager</p>
-                    <p class="text-xs text-secondary mb-0">Organization</p>
+                    <img src="{{ $post->foto }}" class="avatar avatar-sm me-3" alt="user1">
                   </td>
                   <td class="align-middle text-center text-sm">
-                    <span class="badge badge-sm bg-gradient-success">Online</span>
+                    <span class="text-secondary text-xs font-weight-bold">{{ $post->caption }}</span>
                   </td>
                   <td class="align-middle text-center">
                     <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                   </td>
                   <td class="align-middle">
-                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                      Edit
+                    <a href="{{ route('post.view', ['id' => $post->id]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                      <span class="badge badge-sm bg-gradient-success">Show</span>
+                    </a>
+                    <a href="{{ route('post.edit', ['id' => $post->id]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                      <span class="badge badge-sm bg-gradient-warning">Edit</span>
                     </a>
                   </td>
                 </tr>

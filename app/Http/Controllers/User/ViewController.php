@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class ViewController extends Controller
 {
     public function index () {
-        $posts = Post::where('id_user', Auth::user()->id);
+        $posts = Post::where('id_user', Auth::user()->id)->get();
         return view('profile', compact('posts'));
     }
 }

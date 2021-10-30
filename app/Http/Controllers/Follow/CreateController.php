@@ -11,10 +11,16 @@ class CreateController extends Controller
 {
     public function store(Request $request)
     {
-        $follow = Follow::create([
-            'id_user' => $request->id_user,
-            'follower' => Auth::id(),
-        ]);
+        $follow = Follow::where('id_user', $request->id_user)
+                        ->where('follower', Auth::id())->first();
+        if ($follow) {
+            $follow->delete(); // unfollow
+        } else {
+            $follow = Follow::create([
+                'id_user' => $request->id_user,
+                'follower' => Auth::id(),
+            ]);
+        }
 
         return redirect()->back();
     }
