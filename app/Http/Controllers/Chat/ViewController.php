@@ -5,11 +5,18 @@ namespace App\Http\Controllers\Chat;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Chat;
+use App\Models\UserChat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ViewController extends Controller
 {
+    public function getActiveChat()
+    {
+        $userChat = UserChat::where('id_user', Auth::id())->get()->first();
+        $id = $userChat->id;
+        return redirect()->route('chat', [$id]);
+    }
     public function index($active = 0)
     {
         $user = User::findOrFail(Auth::user()->id);

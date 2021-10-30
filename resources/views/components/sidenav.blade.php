@@ -44,7 +44,7 @@
       </li>
 
       <li class="nav-item" id="chat">
-        <a class="nav-link" href="/chat/1">
+        <a class="nav-link" href="/chat">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fa fa-user text-dark" aria-hidden="true"></i>
           </div>

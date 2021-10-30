@@ -79,6 +79,7 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     Route::get('/comment/delete/{id}', [CommentDelete::class, 'deleteComment'])->name('comment.delete'); // todo
 
     // chatting
+    Route::get('/chat', [ChatView::class, 'getActiveChat'])->name('chat.nav');
     Route::get('/chat/{active}', [ChatView::class, 'index'])->name('chat');
     Route::post('/chat/{active}', [ChatContentCreate::class, 'store'])->name('chatcontent.create.post');
     Route::get('/chat.new', [ChatView::class, 'showForm'])->name('chat.create.get');
