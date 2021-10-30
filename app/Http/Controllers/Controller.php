@@ -12,6 +12,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    private $actionNotAllowed = 'you are not allowed to that action';
+
     /**
      * @return string
      */
