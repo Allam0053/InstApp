@@ -27,7 +27,7 @@ class ViewController extends Controller
                 if ($post->id == $saved->id_post) $post->saved = true;
             }
         }
-        return view('front', compact(['posts']));
+        return view('front', compact(['posts', 'followings']));
     }
 
     public function view($id)
