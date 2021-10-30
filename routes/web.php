@@ -56,6 +56,7 @@ Route::get('/', [PostView::class, 'index'])->name('home');
 
 Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     Route::get('/profile', [UserView::class, 'index'])->name('profile');
+    Route::get('/profile/{id}', [UserView::class, 'get'])->name('profile.get');
 
     Route::get('/post/new', [PostCreate::class, 'create'])->name('post.create.get');
     Route::post('/post/new', [PostCreate::class, 'store'])->name('post.create.post');
@@ -77,6 +78,7 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     Route::post('/chat.new', [ChatCreate::class, 'store'])->name('chat.create.post');
 
     Route::post('/follow', [FollowCreate::class, 'store'])->name('follow.create');
+    Route::post('/unfollow', [FollowCreate::class, 'store'])->name('follow.delete');
 });
 
 Route::get('/dashboard', function () {
