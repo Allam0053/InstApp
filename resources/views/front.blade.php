@@ -37,7 +37,7 @@
                     @csrf
                     <input type="hidden" name="id_user" value="{{$post->id_user}}" />
                     <button type="submit" style="background: none; border: none;">
-                      <span class="badge badge-sm bg-gradient-primary">Follow</span>
+                      <span class="badge badge-sm bg-gradient-{{ $post->following ? 'danger' : 'primary'}}">{{ $post->following ? 'Unfollow' : 'Follow'}}</span>
                     </button>
                   </h6>
                 </form>
@@ -55,10 +55,10 @@
                 <button type="submit" style="background: none; border: none;">
                   <span class="badge badge-sm bg-gradient-primary">Save</span>
                 </button>
+                @if($post->id_user == Auth::id())
+                <a class="badge badge-sm bg-gradient-warning" href="{{ route('post.edit', ['id' => $post->id]) }}">Edit</a>
+                @endif
               </form>
-              <a href="javascript:;">
-                <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span class="sr-only">Edit Profile</span>
-              </a>
             </div>
           </div>
         </div>

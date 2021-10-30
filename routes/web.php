@@ -37,7 +37,7 @@ use App\Http\Controllers\Follow\DeleteController as FollowDelete;
 
 use App\Http\Controllers\Save\ViewController as SavedView;
 use App\Http\Controllers\Save\CreateController as SavedCreate;
-
+use App\Models\ChatContent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -83,7 +83,8 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     Route::post('/chat/{active}', [ChatContentCreate::class, 'store'])->name('chatcontent.create.post');
     Route::get('/chat.new', [ChatView::class, 'showForm'])->name('chat.create.get');
     Route::post('/chat.new', [ChatCreate::class, 'store'])->name('chat.create.post');
-    Route::get('/chat/delete/{id}', [ChatDelete::class, 'deleteChat'])->name('chat.delete'); // todo
+    Route::get('/chat/delete/{id}', [ChatDelete::class, 'deleteChat'])->name('chat.delete'); // todo chat grup
+    Route::get('/chatcontent/delete/{id}', [ChatContent::class, 'deleteChatContent'])->name('chatcontent.delete'); // todo chat content
 
     // following
     Route::post('/follow', [FollowCreate::class, 'store'])->name('follow.create');
