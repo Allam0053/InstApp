@@ -10,10 +10,15 @@ class CreateController extends Controller
 {
     public function store(Request $request)
     {
-        $saved = Saved::create([
-            'id_user' => $request->id_user,
-            'id_post' => $request->id_post
-        ]);
+        $saved = Saved::where('id_user', $request->id_user)->where('id_post', $request->id_post)->get()->first();
+        if ($saved) {
+            $saved->delete();
+        } else {
+            $saved = Saved::create([
+                'id_user' => $request->id_user,
+                'id_post' => $request->id_post
+            ]);
+        }
 
         return redirect()->back();
     }

@@ -42,19 +42,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function post() {
+    public function post()
+    {
         return $this->hasMany(Post::class, 'id_user', 'id');
     }
 
-    public function comment() {
+    public function comment()
+    {
         return $this->hasMany(Comment::class, 'id_user', 'id');
     }
 
-    public function like() {
+    public function like()
+    {
         return $this->hasMany(Like::class, 'id_user', 'id');
     }
 
-    public function chat() {
+    public function chat()
+    {
         return $this->belongsToMany(Chat::class, 'userchat', 'id_user', 'id_chat', 'id', 'id');
+    }
+
+    // have alias
+    public function saved_post()
+    {
+        return $this->savedPost();
+    }
+    public function savedPost()
+    {
+        return $this->belongsToMany(Post::class, 'saved', 'id_user', 'id_post', 'id', 'id');
     }
 }

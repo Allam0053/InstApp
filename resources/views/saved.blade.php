@@ -13,7 +13,7 @@
 
     @if(Session::has('success'))
     <div class="alert alert-success">
-        {{Session::get('success')}}
+      {{Session::get('success')}}
     </div>
     @elseif(Session::has('forbidden'))
     <div class="alert alert-danger">
@@ -36,7 +36,9 @@
               <form action="{{route('follow.create')}}" method="post">
                 @csrf
                 <input type="hidden" name="id_user" value="{{$post->id_user}}" />
-                <input type="submit" name="follow" value="follow" />
+                <button type="submit" style="background: none; border: none;">
+                  <span class="badge badge-sm bg-gradient-primary">Follow</span>
+                </button>
               </form>
               <a href="javascript:;">
                 <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span class="sr-only">Edit Profile</span>
@@ -65,21 +67,21 @@
           <ul class="list-group mb-4">
             <?php $counter = 0; ?>
             @foreach ($post->comment as $comment)
-              <li class="border-0 ps-0 pt-0 text-sm row">
-                <div class="col-11">
-                  <strong class="text-dark">{{ $comment->user->name }}</strong> &nbsp; <div id="isi-{{ $comment->id }}">{{ $comment->isi }}</div>
-                </div>
+            <li class="border-0 ps-0 pt-0 text-sm row">
+              <div class="col-11">
+                <strong class="text-dark">{{ $comment->user->name }}</strong> &nbsp; <div id="isi-{{ $comment->id }}">{{ $comment->isi }}</div>
+              </div>
 
-                @if(Auth::check())
-                @if($comment->user->id == Auth::guard('web')->user()->id)
-                <button type="button" class="btn bg-gradient-primary col-1 text-center p-auto" id="btn-edit-comment" data-bs-toggle="modal" data-bs-target="#editkomen" comment="{{ $comment->id }}">
-                  <i class="fas fa-edit"></i>
-                </button>
-                @endif
-                @endif
-              </li>
-              <!-- TODO -->
-              <?php if ($counter++ == 5) break; ?>
+              @if(Auth::check())
+              @if($comment->user->id == Auth::guard('web')->user()->id)
+              <button type="button" class="btn bg-gradient-primary col-1 text-center p-auto" id="btn-edit-comment" data-bs-toggle="modal" data-bs-target="#editkomen" comment="{{ $comment->id }}">
+                <i class="fas fa-edit"></i>
+              </button>
+              @endif
+              @endif
+            </li>
+            <!-- TODO -->
+            <?php if ($counter++ == 5) break; ?>
             @endforeach
           </ul>
           <div class="row d-flex justify-content-center">
@@ -104,9 +106,9 @@
 
     {{-- <div class="col-md-3 mx-auto">
       {{ $posts->links() }}
-    </div> --}}
+  </div> --}}
 
-  </div>
+</div>
 </div>
 
 @if(Auth::check())

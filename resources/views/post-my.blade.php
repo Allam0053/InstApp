@@ -38,7 +38,9 @@
               <form action="{{route('follow.create')}}" method="post">
                 @csrf
                 <input type="hidden" name="id_user" value="{{$post->id_user}}" />
-                <input type="submit" name="follow" value="follow" />
+                <button type="submit" style="background: none; border: none;">
+                  <span class="badge badge-sm bg-gradient-primary">Follow</span>
+                </button>
               </form>
               <a href="javascript:;">
                 <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span class="sr-only">Edit Profile</span>
