@@ -30,17 +30,15 @@
       <div class="card bg-secondary">
         <form class="card-header mb-3 w-100">
           <div class="form-group w-100 mb-0">
-            <div class="form-group input-group-alternative mb-0 input-group" placeholder="Search contact">
-              <!---->
-              <!---->
-              <!---->
-              <input aria-describedby="addon-right addon-left" placeholder="Search contact" class="form-control">
-              <div class="input-group-append">
-                <span class="input-group-text">
-                  <i class="ni ni-zoom-split-in"></i>
-                </span>
+            <div class="row">
+              <div class="col-8">
+                <div class="form-group input-group-alternative mb-0 input-group" placeholder="Search contact">
+                  <input aria-describedby="addon-right addon-left" placeholder="Search contact" class="form-control">
+                </div>
               </div>
-              <!---->
+              <div class="col-4">
+                <a href="{{route('chat.create.get')}}" class="btn btn-primary">New</a>
+              </div>
             </div>
           </div>
         </form>
