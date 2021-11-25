@@ -15,7 +15,7 @@ class ViewController extends Controller
      */
     public function getAll()
     {
-        $posts = Post::where('foto', 'NOT LIKE', 'http%')->get();
+        $posts = Post::where('foto', 'NOT LIKE', 'http%')->orderBy('id', 'DESC')->get();
         return $this->sendResponse($posts, asset('storage') . '/');
     }
 }
