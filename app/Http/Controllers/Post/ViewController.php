@@ -14,7 +14,8 @@ class ViewController extends Controller
 {
     public function index()
     {
-        $posts = Post::paginate(10);
+        $posts = Post::orderBy('id', 'DESC')->get();
+        $posts = new LengthAwarePaginator($posts, $posts->count(), 10);
 
         $followings = Follow::where('follower', Auth::id())->get();
         $saveds = Saved::where('id_user', Auth::id())->get();
@@ -26,6 +27,8 @@ class ViewController extends Controller
             foreach ($saveds as $saved) {
                 if ($post->id == $saved->id_post) $post->saved = true;
             }
+
+            if (substr($post->foto, 0, 4) != 'http') $post->foto = asset('storage') . '/' . $post->foto;
         }
         return view('front', compact(['posts', 'followings']));
     }

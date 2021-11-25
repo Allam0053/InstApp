@@ -26,4 +26,17 @@ class Controller extends BaseController
             return $e->getMessage();
         }
     }
+
+    // Mengirim response berhasil
+    public function sendResponse($result, $message)
+    {
+        $response = [
+            'success' => true,
+            'data'    => $result,
+            'message' => $message,
+        ];
+
+
+        return response()->json($response, 200);
+    }
 }

@@ -35,7 +35,7 @@
                 <form action="{{route('follow.create')}}" method="post">
                   <h6 class="mb-0">
                     @if($post->user->avatar)
-                    <img src="{{ $post->user->avatar }}" class="avatar avatar-sm me-3" alt="user1">
+                    <img src="{{ asset('storage') . '/' . $post->user->avatar }}" class="avatar avatar-sm me-3" alt="user1">
                     @endif
                     {{ $post->user->name }}
                     @csrf
