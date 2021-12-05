@@ -65,6 +65,6 @@ class RegisteredUserController extends Controller
             $foto_name = str_replace(' ', '-', strtolower($foto_name)); // typedata : string
             $foto->storeAs(null, $foto_name, ['disk' => 'public']); // memanggil function untuk menaruh file di storage
         }
-        return asset('storage') . '/' . $foto_name; // me return path/to/file.ext
+        return $foto_name; // me return path/to/file.ext
     }
 }

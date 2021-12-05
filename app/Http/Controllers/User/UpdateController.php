@@ -32,17 +32,4 @@ class UpdateController extends Controller
 
         return redirect()->back();
     }
-
-    public function saveAvatar(Request $request, $id)
-    {
-        $foto = $request->avatar; // typedata : file
-        $foto_name = ''; // typedata : string
-        if ($foto !== NULL) {
-            $foto_name = 'avatar' . '-' . $id . "." . $foto->extension(); // typedata : string
-            $foto_name = str_replace(' ', '-', strtolower($foto_name)); // typedata : string
-            $foto->storeAs(null, $foto_name, ['disk' => 'public']); // memanggil function untuk menaruh file di storage
-            // $foto->Storage::disk('public')->put('storage/' . $foto_name, $foto);
-        }
-        return asset('storage') . '/' . $foto_name; // me return path/to/file.ext
-    }
 }

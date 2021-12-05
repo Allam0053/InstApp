@@ -64,7 +64,7 @@
         @endif
         <a class="nav-link {{$profile}}" href="{{ route('profile') }}">
           @if(Auth::user()->avatar)
-          <img src="{{ Auth::user()->avatar }}" class="avatar avatar-sm me-3" alt="user1">
+          <img src="{{ asset('storage') . '/' . Auth::user()->avatar }}" class="avatar avatar-sm me-3" alt="user1">
           @else
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fa fa-user text-dark" aria-hidden="true"></i>
