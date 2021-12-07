@@ -13,6 +13,7 @@ class Post extends Model
         'foto',
         'caption',
         'id_user',
+        'sentiment'
     ];
 
     public function user()

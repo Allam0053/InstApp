@@ -13,13 +13,16 @@ class Comment extends Model
         'isi',
         'id_user',
         'id_post',
+        'sentiment'
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
-    
-    public function post() {
+
+    public function post()
+    {
         return $this->belongsTo(Post::class, 'id_post', 'id');
     }
 }

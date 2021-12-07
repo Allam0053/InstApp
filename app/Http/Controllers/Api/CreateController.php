@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
+use App\Models\ChatContent;
+use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\UserChat;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,7 +64,8 @@ class CreateController extends Controller
         try {
             $post = Post::create([
                 'caption' => $r->caption,
-                'id_user' => Auth::guard('api')->user()->id
+                'id_user' => Auth::guard('api')->user()->id,
+                'sentiment' => $r->sentiment
             ]);
             $post_id = $post->id;
             $post->update([
@@ -70,24 +75,72 @@ class CreateController extends Controller
                 throw new Exception('unknown file extension');
             return $this->sendResponse($post->foto, asset('storage') . '/');
         } catch (Exception $e) {
-            Post::where('id', $post_id)->first()->delete($post_id);
-            return $this->sendResponse('failed adding', $e->message);
+            $post = Post::where('id', $post_id)->first();
+            if ($post != null) $post->delete();
+            return $this->sendResponse('failed adding', $e->getMessage());
         }
     }
 
     public function liking($id)
     {
-        $like = Like::where('id_post', $id)
-            ->where('id_user', Auth::user()->id)->first();
-        if (!$like) {
-            Like::create([
-                'id_post' => $id,
-                'id_user' => Auth::user()->id
-            ]);
-            return $this->sendResponse('success liking post with id #' . $id, null);
-        } else {
-            $like->delete();
-            return $this->sendResponse('success disliking post with id #' . $id, null);
+        try {
+            $like = Like::where('id_post', $id)
+                ->where('id_user', Auth::user()->id)->first();
+            if (!$like) {
+                Like::create([
+                    'id_post' => $id,
+                    'id_user' => Auth::user()->id
+                ]);
+                return $this->sendResponse('success liking post with id #' . $id, null);
+            } else {
+                $like->delete();
+                return $this->sendResponse('success disliking post with id #' . $id, null);
+            }
+        } catch (Exception $e) {
+            return $this->sendResponse('fail to like ' . $id, $e->getMessage());
         }
+    }
+
+    public function createComment(Request $r)
+    {
+        $comment = Comment::create([
+            'isi' => $r->isi,
+            'id_post' => $r->id_post,
+            'id_user' => Auth::user()->id,
+            'sentiment' => $r->sentiment
+        ]);
+        return $this->sendResponse($comment, 'commented post #' . $r->id_post);
+    }
+
+    public function createGroup(Request $r)
+    {
+        $chat = Chat::create();
+        $creatorId = Auth::id();
+        foreach ($r->members as $member) {
+            if ($creatorId == $member) continue;
+            $userchat = UserChat::create([
+                'id_chat' => $chat->id,
+                'id_user' => $member
+            ]);
+        }
+
+        // TODO : check user add themself or not
+        UserChat::create([
+            'id_chat' => $chat->id,
+            'id_user' => $creatorId
+        ]);
+        $chat->user;
+        return $this->sendResponse($chat, 'success create group');
+    }
+
+    public function sendChat(Request $r)
+    {
+        $chatcontent = ChatContent::create([
+            'pengirim' => Auth::id(),
+            'content' => $r->content,
+            'id_chat' => $r->id_chat,
+            'sentiment' => $r->sentiment
+        ]);
+        return $this->sendResponse($chatcontent, 'success send chat');
     }
 }

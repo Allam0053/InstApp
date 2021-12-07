@@ -13,14 +13,17 @@ class ChatContent extends Model
     protected $fillable = [
         'content',
         'id_chat',
-        'pengirim'
+        'pengirim',
+        'sentiment'
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class, 'pengirim');
     }
 
-    public function chat() {
+    public function chat()
+    {
         return $this->belongsTo(Chat::class, 'id_chat');
     }
 }
