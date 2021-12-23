@@ -116,7 +116,8 @@ class CreateController extends Controller
     {
         $chat = Chat::create();
         $creatorId = Auth::id();
-        foreach ($r->members as $member) {
+        $members = $this->getMemberId($r->members);
+        foreach ($members as $member) {
             if ($creatorId == $member) continue;
             $userchat = UserChat::create([
                 'id_chat' => $chat->id,
@@ -131,6 +132,14 @@ class CreateController extends Controller
         ]);
         $chat->user;
         return $this->sendResponse($chat, 'success create group');
+    }
+
+    public function getMemberId($str): array
+    {
+        $str = preg_replace('#\s+#', ',', trim($str));
+        $to_arr = '[' . $str . ']';
+        $arr = json_decode($to_arr);
+        return $arr;
     }
 
     public function sendChat(Request $r)

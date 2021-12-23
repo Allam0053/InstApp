@@ -41,6 +41,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('login', [ApiAuth::class, 'login'])->name('api.login');
     Route::post('register', [ApiAuth::class, 'register'])->name('api.register');
     Route::get('profile/{id}', [ApiView::class, 'getProfileById'])->name('api.user.profile.byid');
+    Route::get('favourites', [ApiView::class, 'getFavouritesPosts'])->name('api.post.favourites');
 
     // authenticated activities goes here
     Route::group(['middleware' => 'auth:api'], function () {
@@ -82,8 +83,13 @@ Route::get('get-asset-link', [ApiAuth::class, 'getAssetLink'])->name('api.asset-
 Route::get('posts', [ApiView::class, 'getAllPosts'])->name('api.post.getall');
 Route::get('posts/{id}', [ApiView::class, 'getPostById'])->name('api.post.byid');
 
+Route::get('search-user/{keyword}', [ApiView::class, 'getUserByKeyword']);
+
 Route::group(['prefix' => 'comment'], function () {
     Route::get('by-post-id/{id}', [ApiView::class, 'getCommentByPostId'])->name('api.comment.bypostid');
     Route::get('by-user-id/{id}', [ApiView::class, 'getCommentByUserId'])->name('api.comment.byuserid');
 });
 // TODO comment 
+
+
+Route::get('/followers/{id}', [ApiView::class, 'getFollowerById'])->name('api.get.followers');

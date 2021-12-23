@@ -17,7 +17,7 @@ class ViewController extends Controller
         if ($userChat == null) {
             return redirect()->route('chat.create.get');
         } else {
-            $id = $userChat->id;
+            $id = $userChat->id_chat;
             return redirect()->route('chat', [$id]);
         }
     }

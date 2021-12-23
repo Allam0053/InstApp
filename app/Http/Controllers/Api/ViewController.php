@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\Comment;
+use App\Models\Follow;
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\UserChat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ViewController extends Controller
@@ -29,6 +32,7 @@ class ViewController extends Controller
         $posts = Post::where('foto', 'NOT LIKE', 'http%')->orderBy('id', 'DESC')->get();
         foreach ($posts as $post) {
             $post->user;
+            $post->like_count = $post->like->count();
         }
         return $this->sendResponse($posts, asset('storage') . '/');
     }
@@ -49,7 +53,19 @@ class ViewController extends Controller
     public function getPostById($id)
     {
         $post = Post::where('id', $id)->first();
+        $post->like_count = $post->like->count();
         return $this->sendResponse($post, asset('storage') . '/');
+    }
+
+    public function getFavouritesPosts()
+    {
+        $likes = Like::where('id_user', Auth::guard('api')->user()->id)->get();
+        $favourites = [];
+        foreach ($likes as $like) {
+            $like->post->user;
+            array_push($favourites, $like->post);
+        }
+        return $this->sendResponse($favourites, asset('storage') . '/');
     }
 
     public function getCommentByPostId($id)
@@ -79,13 +95,49 @@ class ViewController extends Controller
             $userchat->chat->user;
             $chats[$it++] = $userchat->chat;
         }
-        return $this->sendResponse(['chats_id' => $chats], asset('storage') . '/');
+        return $this->sendResponse($chats, asset('storage') . '/');
     }
+
+
 
     public function getChatById($id)
     {
         $chat = Chat::where('id', $id)->first();
         $chat->user;
-        return $this->sendResponse(['chats_id' => $chat], asset('storage') . '/');
+        $chat->chat_content;
+        foreach ($chat->chat_content as $chat_content) $chat_content->user;
+        return $this->sendResponse($chat, asset('storage') . '/');
+    }
+
+    public function getFollowerById($id)
+    {
+        $followers = Follow::where('id_user', $id)->get();
+        $followings = Follow::where('follower', $id)->get();
+        foreach ($followers as $follower) {
+            $follower->follower;
+        }
+        foreach ($followings as $following) {
+            $following->user;
+        }
+        $followers_count = $followers->count();
+        $following_count = $followings->count();
+        return $this->sendResponse([
+            // 'followers' => $followers,
+            // 'following' => $followings,
+            'followers_count' => $followers_count,
+            'following_count' => $following_count
+        ], asset('storage') . '/');
+    }
+
+    public function getUserByKeyword($keyword)
+    {
+        $users = User::where(DB::raw('lower(id)'), 'LIKE', "%{$keyword}%")
+            ->orWhere(DB::raw('lower(name)'), 'LIKE', "%{$keyword}%")
+            ->orWhere(DB::raw('lower(email)'), 'LIKE', "%{$keyword}%")
+            ->orWhere(DB::raw('lower(bio)'), 'LIKE', "%{$keyword}%")
+            ->orWhere(DB::raw('lower(mobile)'), 'LIKE', "%{$keyword}%")
+            ->orWhere(DB::raw('lower(city)'), 'LIKE', "%{$keyword}%")
+            ->get();
+        return $this->sendResponse($users, asset('storage') . '/');
     }
 }

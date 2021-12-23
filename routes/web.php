@@ -83,8 +83,8 @@ Route::group(['prefix' => '', 'middleware' => 'user'], function () {
     Route::get('/chat', [ChatView::class, 'getActiveChat'])->name('chat.nav');
     Route::get('/chat/{active}', [ChatView::class, 'index'])->name('chat');
     Route::post('/chat/{active}', [ChatContentCreate::class, 'store'])->name('chatcontent.create.post');
-    Route::get('/chat.new', [ChatView::class, 'showForm'])->name('chat.create.get');
-    Route::post('/chat.new', [ChatCreate::class, 'store'])->name('chat.create.post');
+    Route::get('/chat-new', [ChatView::class, 'showForm'])->name('chat.create.get');
+    Route::post('/chat-new', [ChatCreate::class, 'store'])->name('chat.create.post');
     Route::get('/chat/delete/{id}', [ChatDelete::class, 'deleteChat'])->name('chat.delete'); // todo chat grup
     Route::get('/chatcontent/delete/{id}', [ChatContent::class, 'deleteChatContent'])->name('chatcontent.delete'); // todo chat content
 

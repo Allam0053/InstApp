@@ -37,7 +37,7 @@ class DeleteController extends Controller
     public function deleteComment($id)
     {
         $comment = Comment::where('id', $id)->first();
-        if (Auth::user()->id == $comment->id) $comment->delete();
+        if (Auth::user()->id == $comment->id_user) $comment->delete();
         else return $this->sendResponse('you are not allowed to delete this comment #' . $id, 'failed to delete comment');
         return $this->sendResponse('comment ' . $id . ' deleted', 'success deleted comment');
     }

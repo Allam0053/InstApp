@@ -73,7 +73,7 @@ class Controller extends BaseController
 
         // create a name for the image
         $ext = $this->getExtension($foto);
-        if (!($ext == 'bmp' || $ext == 'jpeg' || $ext == 'jpg' || $ext == 'png' || $ext == 'gif' || $ext == 'dib' || $ext == 'jpe' || $ext == 'tif' || $ext == 'tiff'))
+        if (!($ext == 'jpeg' || $ext == 'jpg' || $ext == 'png'))
             return 'unknown file extension';
         $foto_name = 'foto' . '-' . $id . "." . $ext; // datatype : string
         $foto_name = str_replace(' ', '-', strtolower($foto_name)); // datatype : string
