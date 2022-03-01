@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         $access_token = Auth::user()->createToken('authToken')->accessToken;
 
-        return response(['user' => Auth::user(), 'access_token' => $access_token, 'asset_link' => asset('storage') . '/']);
+        return response(['user' => Auth::user(), 'access_token' => $access_token ]);
     }
 
     public function register(Request $r)
